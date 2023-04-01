@@ -60,64 +60,27 @@ public class MainActivity extends AppCompatActivity {
         bcircle = (ImageView)findViewById(R.id.bcircle);
         delete = (ImageButton)findViewById(R.id.delNote);
 
-//        listView = (ListView)findViewById(R.id.listView);
         recyclerView = (RecyclerView)findViewById(R.id.listofnotes);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-//        ArrayList<String> notes = new ArrayList<>();
 
         MyDbHandler db = new MyDbHandler(MainActivity.this);
 
-//        Note mayank = new Note();
-//        mayank.setNote("Hey brah wtf brah, who tf is this cunt");
-//        mayank.setTitle("zyzz");
-//
-//        db.addNote(mayank);
-
         List<Note> allNotes = db.getAllNotes();
-//        for (Note note: allNotes){
-//            Log.d("\ndbmayank", "Id : " + note.getId() + "\nTitle : " + note.getTitle() + "\nNote : " + note.getNote());
-//            notes.add(note.getTitle() + "--------________---------" + note.getNote());
-//
-//        }
+        Log.d("asdfasdf", allNotes.toString());
 
         adapter = new Adapter(this, allNotes);
         recyclerView.setAdapter(adapter);
 
 
-
-
-
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notes);
-//        listView.setAdapter(arrayAdapter);
-
         if (adapter.getItemCount()!=0){
             recyclerView.setVisibility(View.VISIBLE);
-//            listView.setVisibility(View.VISIBLE);
             escreen.setVisibility(View.GONE);
         } else{
-//            listView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
             escreen.setVisibility(View.VISIBLE);
         }
 
-
-
-
-
-        //listView
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                Intent intent1 = new Intent(MainActivity.this, notetext.class);
-//                intent1.putExtra("nid", i);
-//                startActivity(intent1);
-//
-//
-//            }
-//        });
 
         addNote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,29 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                db.deleteNoteById(note.get);
-//            }
-//        });
-//        bcircle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(delete.getVisibility()==View.GONE){
-//                    delete.setVisibility(View.VISIBLE);
-//                }else{
-//                    delete.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-
-
-
-    };
+    }
     public void change1(){
         llheading.setVisibility(View.GONE);
         choosecolor.setVisibility(View.VISIBLE);
@@ -185,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onBackPressed() {

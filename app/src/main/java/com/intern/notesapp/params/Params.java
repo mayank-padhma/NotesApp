@@ -10,5 +10,6 @@ public class Params {
     public static final String KEY_NOTE = "note";
     public static final String KEY_DATE = "date";
     public static final String KEY_COLOR = "color";
+    public static final String KEY_TEXT_COLOR = "text_color";
 
 }

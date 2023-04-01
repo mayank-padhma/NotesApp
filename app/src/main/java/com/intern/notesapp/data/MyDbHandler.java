@@ -23,16 +23,23 @@ public class MyDbHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String create = "CREATE TABLE " + Params.TABLE_NAME + "(" + Params.KEY_ID +
                 " INTEGER PRIMARY KEY," + Params.KEY_TITLE + " TEXT," + Params.KEY_NOTE + " TEXT,"
-                + Params.KEY_DATE + " TEXT," + Params.KEY_COLOR + " TEXT" + ")";
+                + Params.KEY_DATE + " TEXT," + Params.KEY_COLOR + " TEXT," + Params.KEY_TEXT_COLOR + " TEXT" + ")";
 
-        Log.d("query runned" , create);
         db.execSQL(create);
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("DROP TABLE IF EXISTS " + Params.TABLE_NAME);
 
+        // Create tables again
+        onCreate(db);
+
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.setVersion(oldVersion);
     }
 
     public void addNote(Note note){
@@ -42,9 +49,10 @@ public class MyDbHandler extends SQLiteOpenHelper {
         values.put(Params.KEY_NOTE, note.getNote());
         values.put(Params.KEY_DATE, note.getDate());
         values.put(Params.KEY_COLOR, note.getColor());
+        values.put(Params.KEY_TEXT_COLOR, note.getTextColor());
 
         db.insert(Params.TABLE_NAME, null, values);
-        Log.d("msg", "successfully inserted " + note.getTitle());
+        Log.d("asdfasdf", "successfully inserted " + note.getTitle());
         db.close();
     }
 
@@ -65,9 +73,11 @@ public class MyDbHandler extends SQLiteOpenHelper {
                 note.setNote(cursor.getString(2));
                 note.setDate(cursor.getString(3));
                 note.setColor(cursor.getString(4));
+//                note.setTextColor(cursor.getString(5));
+                Log.d("asdfasdf", "note" + note.toString());
                 noteList.add(note);
             }while(cursor.moveToNext());
-
+            cursor.close();
         return noteList;
 
     }
@@ -87,6 +97,8 @@ public class MyDbHandler extends SQLiteOpenHelper {
         note.setNote(cursor.getString(2));
         note.setDate(cursor.getString(3));
         note.setColor(cursor.getString(4));
+        note.setTextColor(cursor.getString(5));
+        cursor.close();
         return note;
     }
 
@@ -96,6 +108,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
         values.put(Params.KEY_TITLE, note.getTitle());
         values.put(Params.KEY_NOTE, note.getNote());
         values.put(Params.KEY_DATE, note.getDate());
+        values.put(Params.KEY_TEXT_COLOR, note.getTextColor());
 
         //lets update
         return db.update(Params.TABLE_NAME, values, Params.KEY_ID + "=?", new String[]{String.valueOf(note.getId())});
@@ -118,7 +131,9 @@ public class MyDbHandler extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + Params.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
     }
 
 }

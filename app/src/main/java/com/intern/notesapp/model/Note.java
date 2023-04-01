@@ -6,6 +6,7 @@ public class Note {
     private String note;
     private String date;
     private String color;
+    private String textColor;
 
     public Note(String title, String note, String date, String color) {
         this.title = title;
@@ -58,4 +59,7 @@ public class Note {
     public String getColor() { return color; }
 
     public void setColor(String color) { this.color = color; }
+    public String getTextColor() { return textColor; }
+
+    public void setTextColor(String color) { this.textColor = color; }
 }

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/mayan/AndroidStudioProjects/NotesApp/app/src/debug/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/Users/mayan/AndroidStudioProjects/NotesApp/app/src/main/res/drawable/addbutton.xml" value="0.188" />
         <entry key="..\:/Users/mayan/AndroidStudioProjects/NotesApp/app/src/main/res/drawable/circularbutton.xml" value="0.1205" />
         <entry key="..\:/Users/mayan/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/mayan/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_notetext.xml" value="0.14666666666666667" />

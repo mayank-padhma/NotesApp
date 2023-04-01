@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -41,8 +42,6 @@ public class notetext extends AppCompatActivity {
 
     RelativeLayout relativeLayout;
     ImageButton back;
-    ImageButton addImage;
-    LinearLayout llv1;
     LinearLayout llv2;
     ImageButton textStyle;
     ImageButton addText;
@@ -51,6 +50,7 @@ public class notetext extends AppCompatActivity {
     ImageButton colors;
     HorizontalScrollView sv1;
     TextView clrText;
+    String textColor = "#FFFFFF";
     ImageButton cbutton1;
     ImageButton cbutton2;
     ImageButton cbutton3;
@@ -69,24 +69,14 @@ public class notetext extends AppCompatActivity {
     ImageButton cbutton16;
     ImageButton delete;
     ImageButton mic;
-//    ImageButton camera;
-//    ImageButton gallery;
     ImageButton save;
     LinearLayout ll1;
     ImageButton deleteimage;
-//    private static final int REQUEST_CODE_SPEECH_INPUT = 100;
-//    private static final int SELECT_IMAGE_CODE = 1;
     protected static final int RESULT_SPEECH = 1;
 
     String backClr;
 
     ImageView imageView;
-    GridLayout gl1;
-
-
-//    ImageButton undo;
-//    String originalText = null;
-//    Boolean undostate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +84,6 @@ public class notetext extends AppCompatActivity {
         setContentView(R.layout.activity_notetext);
         relativeLayout = (RelativeLayout) findViewById(R.id.relay1);
         back = (ImageButton)findViewById(R.id.back);
-//        addImage = (ImageButton)findViewById(R.id.addimage);
-//        llv1 = (LinearLayout)findViewById(R.id.llv1);
         ll1 = (LinearLayout)findViewById(R.id.ll1);
         llv2 = (LinearLayout)findViewById(R.id.llv2);
         textStyle = (ImageButton)findViewById(R.id.textstyle);
@@ -103,8 +91,6 @@ public class notetext extends AppCompatActivity {
         finalText = (EditText)findViewById(R.id.finaltext);
         writeHere = (EditText)findViewById(R.id.writehere);
         mic = (ImageButton)findViewById(R.id.mic);
-//        camera = (ImageButton)findViewById(R.id.camera);
-//        gallery = (ImageButton)findViewById(R.id.gallery);
         colors = (ImageButton)findViewById(R.id.colors);
         sv1 = (HorizontalScrollView) findViewById(R.id.sv1);
         clrText = (TextView)findViewById(R.id.clrText);
@@ -128,24 +114,6 @@ public class notetext extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.imageView);
         deleteimage = (ImageButton) findViewById(R.id.deleteimage);
         save = (ImageButton) findViewById(R.id.save);
-//        undo = (ImageButton) findViewById(R.id.undo);
-
-        //finalText undo
-//        finalText.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-//                if(i==KeyEvent.KEYCODE_DEL){
-//                    if(undostate == false){
-//                        originalText = finalText.getText().toString().trim();
-//                        undostate = true;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
-
-
 
         startType(finalText);
         startType(writeHere);
@@ -157,45 +125,7 @@ public class notetext extends AppCompatActivity {
 
         //db handler
 
-        MyDbHandler db = new MyDbHandler(notetext.this);
-
-
-
-        //update note
-//        mayank2.setId(16);
-//        mayank2.setTitle("Huishh");
-//        mayank2.setNote("Huishh sdfjl sudk dkd f sdfhksdf sdfkjhhsdf");
-//
-//        int affectedRows = db.noteUpdate(mayank2);
-
-//        Log.d("dbMayank", "No. of affected rows are " + affectedRows);
-//        db.deleteNoteById(4);
-//        db.deleteNoteById(5);
-//        db.deleteNoteById(6);
-//        db.deleteNoteById(8);
-
-        //get all notes
-
-
-
-
-//        List<Note> allNotes = db.getAllNotes();
-//        for (Note note: allNotes){
-//            Log.d("\ndbmayank", "Id : " + note.getId() + "\nTitle : " + note.getTitle() + "\nNote : " + note.getNote());
-//           notes.add(note.getTitle() + "--------________---------" + note.getNote());
-//        }
-//        Log.d("dbmayank", "bro you have " + db.getCount() + " notes in your database");
-
-
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notes);
-//        listView.setAdapter(arrayAdapter);
-
-
-
-
-
-        //********************************************************//
-
+        MyDbHandler db = new MyDbHandler(this);
 
 
         int nn = getIntent().getIntExtra("nid",-1);
@@ -206,12 +136,11 @@ public class notetext extends AppCompatActivity {
         int noteid = note.getId();
 
 
-
-
-
         if(nn != -1) {
             finalText.setVisibility(View.VISIBLE);
             finalText.setText(note.getNote());
+            finalText.setTextColor(Color.parseColor(note.getTextColor()));
+            writeHere.setTextColor(Color.parseColor(note.getTextColor()));
             writeHere.setText(note.getTitle());
             relativeLayout.setBackgroundColor(Color.parseColor(note.getColor()));
 
@@ -246,19 +175,6 @@ public class notetext extends AppCompatActivity {
                 finish();
             }
         });
-
-        //addimage
-//        addImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                llv2.setVisibility(View.GONE);
-//                if(llv1.getVisibility()==View.GONE){
-//                    llv1.setVisibility(View.VISIBLE);
-//                }else{
-//                    llv1.setVisibility(View.GONE);
-//                }
-//            }
-//        });
 
         //textStyle
         textStyle.setOnClickListener(new View.OnClickListener() {
@@ -356,50 +272,6 @@ public class notetext extends AppCompatActivity {
             }
         });
 
-        //undo
-//        undo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finalText.setText(originalText);
-//            }
-//        });
-
-
-
-        //camera
-
-
-
-//        gallery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent1 = new Intent();
-//                intent1.setType("image/*");
-//                intent1.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(intent1, SELECT_IMAGE_CODE);
-//            }
-//        });
-//
-//        camera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(ContextCompat.checkSelfPermission(notetext.this,
-//                        Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-//                    ActivityCompat.requestPermissions(notetext.this,new String[]{Manifest.permission.CAMERA},100);
-//                }
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, 100);
-//
-//            }
-//        });
-//        deleteimage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                imageView.setImageBitmap(null);
-//                gl1.setVisibility(View.GONE);
-//            }
-//        });
-
         //save
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -421,6 +293,8 @@ public class notetext extends AppCompatActivity {
                         newNote.setTitle(writeHere.getText().toString());
                         newNote.setNote(finalText.getText().toString());
                         newNote.setDate(date);
+                        newNote.setTextColor(textColor);
+                        Log.d("asdfasdf", "setting color tooooooo " + textColor);
                         int affectedRows = db.noteUpdate(newNote);
                     }
                     startActivity(intent);
@@ -432,6 +306,7 @@ public class notetext extends AppCompatActivity {
                     newNote.setTitle(writeHere.getText().toString());
                     newNote.setDate(date);
                     newNote.setColor(backClr);
+                    newNote.setTextColor(textColor);
                     if (wh.matches("") && fs.matches("")){
                         Toast.makeText(notetext.this, "Empty Note can't be saved", Toast.LENGTH_LONG).show();
                     }else{
@@ -452,30 +327,15 @@ public class notetext extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("asdfasdf", "color changed to " + clr);
+                textColor = clr;
+                Log.d("asdfasdf", "color changed tooooooo " + textColor);
                 finalText.setTextColor(Color.parseColor(clr));
                 writeHere.setTextColor(Color.parseColor(clr));
             }
         });
     }
 
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//                        if (requestCode == 100) {
-//                            Bitmap bitmap2 = (Bitmap) data.getExtras().get("data");
-//                            imageView.setImageBitmap(bitmap2);
-//                            gl1.setVisibility(View.VISIBLE);
-//                        }
-//                        if (requestCode == 1){
-//                            Uri uri = data.getData();
-//                            imageView.setImageURI(uri);
-//                            gl1.setVisibility(View.VISIBLE);
-//
-//                        }
-//
-//
-//    }
     public void startType(EditText editText){
 
     editText.setOnKeyListener(new View.OnKeyListener() {
