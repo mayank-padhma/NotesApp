@@ -52,7 +52,6 @@ public class MyDbHandler extends SQLiteOpenHelper {
         values.put(Params.KEY_TEXT_COLOR, note.getTextColor());
 
         db.insert(Params.TABLE_NAME, null, values);
-        Log.d("asdfasdf", "successfully inserted " + note.getTitle());
         db.close();
     }
 
@@ -74,7 +73,6 @@ public class MyDbHandler extends SQLiteOpenHelper {
                 note.setDate(cursor.getString(3));
                 note.setColor(cursor.getString(4));
 //                note.setTextColor(cursor.getString(5));
-                Log.d("asdfasdf", "note" + note.toString());
                 noteList.add(note);
             }while(cursor.moveToNext());
             cursor.close();

@@ -294,7 +294,6 @@ public class notetext extends AppCompatActivity {
                         newNote.setNote(finalText.getText().toString());
                         newNote.setDate(date);
                         newNote.setTextColor(textColor);
-                        Log.d("asdfasdf", "setting color tooooooo " + textColor);
                         int affectedRows = db.noteUpdate(newNote);
                     }
                     startActivity(intent);
@@ -327,9 +326,7 @@ public class notetext extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("asdfasdf", "color changed to " + clr);
                 textColor = clr;
-                Log.d("asdfasdf", "color changed tooooooo " + textColor);
                 finalText.setTextColor(Color.parseColor(clr));
                 writeHere.setTextColor(Color.parseColor(clr));
             }

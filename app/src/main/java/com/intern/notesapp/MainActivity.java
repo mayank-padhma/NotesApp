@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         MyDbHandler db = new MyDbHandler(MainActivity.this);
 
         List<Note> allNotes = db.getAllNotes();
-        Log.d("asdfasdf", allNotes.toString());
 
         adapter = new Adapter(this, allNotes);
         recyclerView.setAdapter(adapter);
